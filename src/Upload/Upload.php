@@ -34,21 +34,21 @@ class Upload
     /**
      * File information
      *
-     * @var array[FileInfoInterface]
+     * @var FileInfoInterface[]
      */
     protected $objects = [];
 
     /**
      * Validations
      *
-     * @var array[ValidationInterface]
+     * @var ValidationInterface[]
      */
     protected $validations = [];
 
     /**
      * Validation errors
      *
-     * @var array[String]
+     * @var array
      */
     protected $errors = [];
 
@@ -104,7 +104,7 @@ class Upload
     /**
      * Add file validations
      *
-     * @param array[ValidationInterface] $validations
+     * @param ValidationInterface[] $validations
      *
      * @return Upload Self
      */
@@ -134,7 +134,7 @@ class Upload
     /**
      * Get file validations
      *
-     * @return array[ValidationInterface]
+     * @return ValidationInterface[]
      */
     public function getValidations()
     {
@@ -180,7 +180,7 @@ class Upload
     /**
      * Get file validation errors
      *
-     * @return array[String]
+     * @return array
      */
     public function getErrors()
     {
@@ -188,7 +188,7 @@ class Upload
     }
 
     /**
-     * @return array[FileInfoInterface]
+     * @return FileInfoInterface[]
      */
     public function getFiles(){
         return $this->objects;

@@ -33,6 +33,7 @@ class Mimetype implements ValidationInterface
 
     /**
      * @param FileInfoInterface $fileInfo
+     *
      * @throws Exception If validation fails
      */
     public function validate(FileInfoInterface $fileInfo)

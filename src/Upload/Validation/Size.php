@@ -3,8 +3,8 @@
 namespace Upload\Validation;
 
 use Upload\Exception;
-use Upload\File;
 use Upload\FileInfoInterface;
+use Upload\Upload;
 use Upload\ValidationInterface;
 
 /**
@@ -35,12 +35,12 @@ class Size implements ValidationInterface
     public function __construct($maxSize, $minSize = 0)
     {
         if (is_string($maxSize)) {
-            $maxSize = File::humanReadableToBytes($maxSize);
+            $maxSize = Upload::humanReadableToBytes($maxSize);
         }
         $this->maxSize = $maxSize;
 
         if (is_string($minSize)) {
-            $minSize = File::humanReadableToBytes($minSize);
+            $minSize = Upload::humanReadableToBytes($minSize);
         }
         $this->minSize = $minSize;
     }

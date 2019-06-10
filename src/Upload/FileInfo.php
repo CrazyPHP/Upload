@@ -86,7 +86,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
      *
      * @param string $extension
      *
-     * @return \Upload\FileInfo Self
+     * @return FileInfo Self
      */
     public function setExtension($extension)
     {

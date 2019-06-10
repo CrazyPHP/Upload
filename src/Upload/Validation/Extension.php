@@ -22,6 +22,7 @@ class Extension implements ValidationInterface
 
     /**
      * @param string|array $allowedExtensions Allowed file extensions
+     *
      * @example new \Upload\Validation\Extension(['png','jpg','gif'])
      * @example new \Upload\Validation\Extension('png')
      */
@@ -36,6 +37,7 @@ class Extension implements ValidationInterface
 
     /**
      * @param FileInfoInterface $fileInfo
+     *
      * @throws Exception If validation fails
      */
     public function validate(FileInfoInterface $fileInfo)
