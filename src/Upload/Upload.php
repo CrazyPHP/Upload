@@ -3,11 +3,11 @@
 namespace Upload;
 
 /**
- * Class File
+ * Class Upload
  *
  * @package Upload
  */
-class File implements \ArrayAccess, \IteratorAggregate, \Countable
+class Upload
 {
     /**
      * Upload error code messages
@@ -106,7 +106,7 @@ class File implements \ArrayAccess, \IteratorAggregate, \Countable
      *
      * @param array[ValidationInterface] $validations
      *
-     * @return File Self
+     * @return Upload Self
      */
     public function addValidations(array $validations)
     {
@@ -122,7 +122,7 @@ class File implements \ArrayAccess, \IteratorAggregate, \Countable
      *
      * @param ValidationInterface $validation
      *
-     * @return File Self
+     * @return Upload Self
      */
     public function addValidation(ValidationInterface $validation)
     {
@@ -188,14 +188,21 @@ class File implements \ArrayAccess, \IteratorAggregate, \Countable
     }
 
     /**
-     * Upload file (delegated to storage object)
+     * @return array[FileInfoInterface]
+     */
+    public function getFiles(){
+        return $this->objects;
+    }
+
+    /**
+     * Store file (delegated to storage object)
      *
      * @return bool
      *
      * @throws Exception If validation fails
      * @throws Exception If upload fails
      */
-    public function upload()
+    public function store()
     {
         if ($this->isValid() === false) {
             throw new Exception('File validation failed');
@@ -206,36 +213,6 @@ class File implements \ArrayAccess, \IteratorAggregate, \Countable
         }
 
         return true;
-    }
-
-    public function offsetExists($offset)
-    {
-        return isset($this->objects[$offset]);
-    }
-
-    public function offsetGet($offset)
-    {
-        return isset($this->objects[$offset]) ? $this->objects[$offset] : null;
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        $this->objects[$offset] = $value;
-    }
-
-    public function offsetUnset($offset)
-    {
-        unset($this->objects[$offset]);
-    }
-
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->objects);
-    }
-
-    public function count()
-    {
-        return count($this->objects);
     }
 
     /**
