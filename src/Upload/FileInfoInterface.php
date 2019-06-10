@@ -57,11 +57,4 @@ interface FileInfoInterface
      * @return bool
      */
     public function isUploadedFile();
-
-    public function addError($text);
-
-    /**
-     * @return array
-     */
-    public function getErrors();
 }

@@ -31,13 +31,6 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
     protected $mimetype;
 
     /**
-     * List of validation errors
-     *
-     * @var array
-     */
-    protected $errors = [];
-
-    /**
      * @param string $filePathname Absolute path to uploaded file on disk
      * @param string $newName Desired file name (with extension) of uploaded file
      */
@@ -165,21 +158,5 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
     public function isUploadedFile()
     {
         return is_uploaded_file($this->getPathname());
-    }
-
-    /**
-     * @param string $text
-     */
-    public function addError($text)
-    {
-        $this->errors[] = $text;
-    }
-
-    /**
-     * @return array
-     */
-    public function getErrors()
-    {
-        return $this->errors;
     }
 }
