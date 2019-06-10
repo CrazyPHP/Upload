@@ -46,11 +46,18 @@ class Upload
     protected $validations = [];
 
     /**
-     * Validation errors
+     * Upload errors
      *
      * @var array
      */
-    protected $errors = [];
+    protected $uploadErrors = [];
+
+    /**
+     * Validate errors
+     *
+     * @var array
+     */
+    protected $validateErrors = [];
 
     /**
      * File can be received: from $_FILES, from disk, from array.
@@ -77,24 +84,26 @@ class Upload
             if (is_array($file['tmp_name'])) {
                 foreach ($file['tmp_name'] as $index => $tmpName) {
                     if ($file['error'][$index] !== UPLOAD_ERR_OK) {
-                        $this->errors[] = sprintf(
+                        $this->uploadErrors[] = sprintf(
                             '%s: %s',
                             $file['name'][$index],
                             static::$errorCodeMessages[$file['error'][$index]]
                         );
                         continue;
+                    } else {
+                        $this->objects[] = new FileInfo($file['tmp_name'][$index], $file['name'][$index]);
                     }
-                    $this->objects[] = new FileInfo($file['tmp_name'][$index], $file['name'][$index]);
                 }
             } else {
                 if ($file['error'] !== UPLOAD_ERR_OK) {
-                    $this->errors[] = sprintf(
+                    $this->uploadErrors[] = sprintf(
                         '%s: %s',
                         $file['name'],
                         static::$errorCodeMessages[$file['error']]
                     );
+                } else {
+                    $this->objects[] = new FileInfo($file['tmp_name'], $file['name']);
                 }
-                $this->objects[] = new FileInfo($file['tmp_name'], $file['name']);
             }
         }
 
@@ -142,39 +151,48 @@ class Upload
     }
 
     /**
-     * Is this collection valid and without errors?
+     * Is all files valid or not?
      *
      * @return bool
      */
     public function isValid()
     {
         foreach ($this->objects as $fileInfo) {
-
-            // Check is uploaded file
-            if ($fileInfo->isUploadedFile() === false) {
-                $this->errors[] = sprintf(
-                    '%s: %s',
-                    $fileInfo->getNameWithExtension(),
-                    'Is not an uploaded file'
-                );
-                continue;
-            }
-
-            // Apply user validations
             foreach ($this->validations as $validation) {
                 try {
                     $validation->validate($fileInfo);
-                } catch (\Upload\Exception $e) {
-                    $this->errors[] = sprintf(
+                } catch (Exception $e) {
+                    $text = sprintf(
                         '%s: %s',
                         $fileInfo->getNameWithExtension(),
                         $e->getMessage()
                     );
+                    $fileInfo->addError($text);
+                    $this->validateErrors[] = $text;
                 }
             }
         }
 
-        return empty($this->errors);
+        return empty($this->validateErrors);
+    }
+
+    /**
+     * Is all files uploaded or not?
+     *
+     * @return bool
+     */
+    public function isUploaded(){
+        return empty($this->uploadErrors);
+    }
+
+    /**
+     * Get file upload errors
+     *
+     * @return array
+     */
+    public function getUploadErrors()
+    {
+        return $this->uploadErrors;
     }
 
     /**
@@ -182,15 +200,16 @@ class Upload
      *
      * @return array
      */
-    public function getErrors()
+    public function getValidateErrors()
     {
-        return $this->errors;
+        return $this->validateErrors;
     }
 
     /**
      * @return FileInfoInterface[]
      */
-    public function getFiles(){
+    public function getFiles()
+    {
         return $this->objects;
     }
 
@@ -199,13 +218,12 @@ class Upload
      *
      * @return bool
      *
-     * @throws Exception If validation fails
-     * @throws Exception If upload fails
+     * @throws Exception If upload/validation fails
      */
     public function store()
     {
-        if ($this->isValid() === false) {
-            throw new Exception('File validation failed');
+        if ($this->isUploaded() == false || $this->isValid() == false) {
+            throw new Exception('File upload/validation failed');
         }
 
         foreach ($this->objects as $fileInfo) {
