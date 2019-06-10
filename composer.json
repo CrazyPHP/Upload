@@ -1,0 +1,24 @@
+{
+  "name": "crazyphp/upload",
+  "type": "library",
+  "description": "Handle file uploads.",
+  "keywords": ["upload", "validation", "file"],
+  "homepage": "https://github.com/CrazyPHP/Upload",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "CrazyPHP",
+      "homepage": "https://github.com/CrazyPHP"
+    }
+  ],
+  "require": {
+    "php": "^7.3",
+    "ext-fileinfo": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0"
+  },
+  "autoload": {
+    "psr-4": { "Upload\\": "src/Upload" }
+  }
+}
