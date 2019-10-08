@@ -92,7 +92,7 @@ class Upload
                 }
             }
         } else {
-            $this->uploadErrors[] = static::$errorCodes[$file[4]];
+            $this->uploadErrors[] = static::$errorCodes[4];
         }
 
         $this->storage = $storage;
