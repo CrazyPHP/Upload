@@ -91,6 +91,8 @@ class Upload
                     $this->objects[] = new FileInfo($file['tmp_name'], $file['name']);
                 }
             }
+        } else {
+            $this->uploadErrors[] = static::$errorCodes[$file[4]];
         }
 
         $this->storage = $storage;
