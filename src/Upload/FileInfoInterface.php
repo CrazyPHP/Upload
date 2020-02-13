@@ -44,9 +44,10 @@ interface FileInfoInterface
     public function getSize();
 
     /**
+     * @param string $algorithm sha256|md5
      * @return string
      */
-    public function getHash();
+    public function getHash($algorithm = 'sha256');
 
     /**
      * @return array

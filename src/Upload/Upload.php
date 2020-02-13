@@ -4,14 +4,12 @@ namespace Upload;
 
 /**
  * Class Upload
- *
  * @package Upload
  */
 class Upload
 {
     /**
      * Upload error code messages
-     *
      * @var array
      */
     protected static $errorCodes = [
@@ -26,28 +24,24 @@ class Upload
 
     /**
      * Storage delegate
-     *
      * @var StorageInterface
      */
     protected $storage;
 
     /**
      * File information
-     *
      * @var FileInfoInterface[]
      */
     protected $objects = [];
 
     /**
      * Upload errors
-     *
      * @var array
      */
     protected $uploadErrors = [];
 
     /**
      * File can be received: from $_FILES, from disk, from array.
-     *
      * @param string|array $data
      * @param StorageInterface $storage The upload delegate instance
      */
@@ -100,7 +94,6 @@ class Upload
 
     /**
      * Is all files uploaded or not?
-     *
      * @return bool
      */
     public function isUploaded()
@@ -110,7 +103,6 @@ class Upload
 
     /**
      * Get file upload errors
-     *
      * @return array
      */
     public function getUploadErrors()
@@ -128,9 +120,7 @@ class Upload
 
     /**
      * Store file (delegated to storage object)
-     *
      * @return bool
-     *
      * @throws Exception if store fails
      */
     public function store()

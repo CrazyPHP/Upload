@@ -4,28 +4,24 @@ namespace Upload;
 
 /**
  * Class FileInfo
- *
  * @package Upload
  */
 class FileInfo extends \SplFileInfo implements FileInfoInterface
 {
     /**
      * File name (without extension)
-     *
      * @var string
      */
     protected $name;
 
     /**
      * File extension (without dot prefix)
-     *
      * @var string
      */
     protected $extension;
 
     /**
      * File mimetype
-     *
      * @var string
      */
     protected $mimetype;
@@ -45,7 +41,6 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get file name (without extension)
-     *
      * @return string
      */
     public function getName()
@@ -55,11 +50,8 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Set file name (without extension)
-     *
      * It also makes sure file name is safe
-     *
      * @param string $name
-     *
      * @return FileInfo Self
      */
     public function setName($name)
@@ -73,7 +65,6 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get file extension (without dot prefix)
-     *
      * @return string
      */
     public function getExtension()
@@ -83,9 +74,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Set file extension (without dot prefix)
-     *
      * @param string $extension
-     *
      * @return FileInfo Self
      */
     public function setExtension($extension)
@@ -97,7 +86,6 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get file name with extension
-     *
      * @return string
      */
     public function getNameWithExtension()
@@ -107,7 +95,6 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get mimetype
-     *
      * @return string
      */
     public function getMimetype()
@@ -125,19 +112,16 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get a specified hash
-     *
      * @param string $algorithm md5|sha256
-     *
      * @return string
      */
-    public function getHash($algorithm = 'md5')
+    public function getHash($algorithm = 'sha256')
     {
         return hash_file($algorithm, $this->getPathname());
     }
 
     /**
      * Get image dimensions
-     *
      * @return array formatted array of dimensions
      */
     public function getDimensions()
@@ -152,7 +136,6 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Is this file uploaded with a POST request?
-     *
      * @return bool
      */
     public function isUploadedFile()

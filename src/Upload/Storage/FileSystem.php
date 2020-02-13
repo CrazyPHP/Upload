@@ -8,21 +8,18 @@ use Upload\StorageInterface;
 
 /**
  * Class FileSystem
- *
  * @package Upload\Storage
  */
 class FileSystem implements StorageInterface
 {
     /**
      * Path to upload destination directory (with trailing slash)
-     *
      * @var string
      */
     protected $directory;
 
     /**
      * Overwrite existing files?
-     *
      * @var bool
      */
     protected $overwrite;
@@ -30,7 +27,6 @@ class FileSystem implements StorageInterface
     /**
      * @param string $directory Relative or absolute path to upload directory
      * @param bool $overwrite Should this overwrite existing files?
-     *
      * @throws \InvalidArgumentException If directory does not exist
      * @throws \InvalidArgumentException If directory is not writable
      */
@@ -48,7 +44,6 @@ class FileSystem implements StorageInterface
 
     /**
      * @param FileInfoInterface $fileInfo The file object to upload
-     *
      * @throws Exception If overwrite is false and file already exists
      * @throws Exception If error moving file to destination
      */
@@ -67,7 +62,6 @@ class FileSystem implements StorageInterface
     /**
      * @param string $source The source file
      * @param string $destination The destination file
-     *
      * @return bool
      */
     protected function moveUploadedFile($source, $destination)
