@@ -49,12 +49,14 @@ class Upload
     {
 
         $file = null;
+        $from_disk = false;
 
         if (is_array($data)) {
             $file = $data;
         } else {
             if (is_file($data)) {
                 $this->objects[] = new FileInfo($data);
+                $from_disk = true;
             } else {
                 $file = $_FILES[$data];
             }
@@ -85,7 +87,7 @@ class Upload
                     $this->objects[] = new FileInfo($file['tmp_name'], $file['name']);
                 }
             }
-        } else {
+        } elseif (!$from_disk) {
             $this->uploadErrors[] = static::$errorCodes[4];
         }
 
