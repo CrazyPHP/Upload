@@ -54,7 +54,11 @@ class FileSystem implements StorageInterface
             throw new Exception('File already exists', $fileInfo);
         }
 
-        if ($this->moveUploadedFile($fileInfo->getPathname(), $destinationFile) === false) {
+        if ($fileInfo->isUploadedFile() && $this->moveUploadedFile($fileInfo->getPathname(), $destinationFile) === false) {
+            throw new Exception('Uploaded file could not be moved to final destination.', $fileInfo);
+        }
+
+        if (!$fileInfo->isUploadedFile() && rename($fileInfo->getPathname(), $destinationFile) === false) {
             throw new Exception('File could not be moved to final destination.', $fileInfo);
         }
     }
