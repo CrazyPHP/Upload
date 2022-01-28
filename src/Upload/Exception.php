@@ -9,14 +9,11 @@ namespace Upload;
  */
 class Exception extends \RuntimeException
 {
-    /**
-     * @var FileInfoInterface
-     */
-    protected $fileInfo;
+    protected ?FileInfoInterface $fileInfo;
 
     /**
      * @param string $message
-     * @param FileInfoInterface $fileInfo
+     * @param FileInfoInterface|null $fileInfo
      */
     public function __construct($message, FileInfoInterface $fileInfo = null)
     {

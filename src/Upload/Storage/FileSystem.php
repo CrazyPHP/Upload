@@ -7,22 +7,21 @@ use Upload\FileInfoInterface;
 use Upload\StorageInterface;
 
 /**
- * Class FileSystem
+ * Store files with OS file system
+ *
  * @package Upload\Storage
  */
 class FileSystem implements StorageInterface
 {
     /**
      * Path to upload destination directory (with trailing slash)
-     * @var string
      */
-    protected $directory;
+    protected string $directory;
 
     /**
      * Overwrite existing files?
-     * @var bool
      */
-    protected $overwrite;
+    protected bool $overwrite;
 
     /**
      * @param string $directory Relative or absolute path to upload directory

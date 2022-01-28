@@ -3,16 +3,18 @@
 namespace Upload;
 
 /**
- * Class Upload
+ * Upload files from $_FILES, local paths or prepared arrays
+ *
  * @package Upload
  */
 class Upload
 {
     /**
      * Upload error code messages
+     *
      * @var array
      */
-    protected static $errorCodes = [
+    protected static array $errorCodes = [
         1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
         2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
         3 => 'The uploaded file was only partially uploaded',
@@ -22,26 +24,18 @@ class Upload
         8 => 'A PHP extension stopped the file upload'
     ];
 
-    /**
-     * Storage delegate
-     * @var StorageInterface
-     */
-    protected $storage;
+    protected StorageInterface $storage;
 
     /**
-     * File information
      * @var FileInfoInterface[]
      */
-    protected $objects = [];
+    protected array $objects = [];
 
-    /**
-     * Upload errors
-     * @var array
-     */
-    protected $uploadErrors = [];
+    protected array $uploadErrors = [];
 
     /**
      * File can be received: from $_FILES, from disk, from array.
+     *
      * @param string|array $data
      * @param StorageInterface $storage The upload delegate instance
      */
@@ -71,7 +65,6 @@ class Upload
                             $file['name'][$index],
                             static::$errorCodes[$file['error'][$index]]
                         );
-                        continue;
                     } else {
                         $this->objects[] = new FileInfo($file['tmp_name'][$index], $file['name'][$index]);
                     }
@@ -96,6 +89,7 @@ class Upload
 
     /**
      * Is all files uploaded or not?
+     *
      * @return bool
      */
     public function isUploaded()
@@ -105,6 +99,7 @@ class Upload
 
     /**
      * Get file upload errors
+     *
      * @return array
      */
     public function getUploadErrors()
@@ -122,7 +117,8 @@ class Upload
 
     /**
      * Store file (delegated to storage object)
-     * @return bool
+     *
+     * @return bool false if zero files stored
      * @throws Exception if store fails
      */
     public function store()

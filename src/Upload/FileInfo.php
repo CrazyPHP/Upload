@@ -2,6 +2,8 @@
 
 namespace Upload;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * Class FileInfo
  * @package Upload
@@ -10,21 +12,18 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 {
     /**
      * File name (without extension)
-     * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * File extension (without dot prefix)
-     * @var string
      */
-    protected $extension;
+    protected string $extension;
 
     /**
      * File mimetype
-     * @var string
      */
-    protected $mimetype;
+    protected string $mimetype;
 
     /**
      * @param string $filePathname Absolute path to uploaded file on disk
@@ -41,6 +40,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get file name (without extension)
+     *
      * @return string
      */
     public function getName()
@@ -51,12 +51,13 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
     /**
      * Set file name (without extension)
      * It also makes sure file name is safe
+     *
      * @param string $name
      * @return FileInfo Self
      */
     public function setName($name)
     {
-        $name = preg_replace("/([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})/", "", $name);
+        $name = preg_replace("/([^\w\s\d\-_~,;:\[\]().]|[.]{2,})/", "", $name);
         $name = basename($name);
         $this->name = $name;
 
@@ -65,6 +66,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get file extension (without dot prefix)
+     *
      * @return string
      */
     public function getExtension()
@@ -74,6 +76,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Set file extension (without dot prefix)
+     *
      * @param string $extension
      * @return FileInfo Self
      */
@@ -86,6 +89,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get file name with extension
+     *
      * @return string
      */
     public function getNameWithExtension()
@@ -95,6 +99,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get mimetype
+     *
      * @return string
      */
     public function getMimetype()
@@ -112,6 +117,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get a specified hash
+     *
      * @param string $algorithm md5|sha256
      * @return string
      */
@@ -122,8 +128,8 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Get image dimensions
-     * @return array formatted array of dimensions
      */
+    #[ArrayShape(['width' => "mixed", 'height' => "mixed"])]
     public function getDimensions()
     {
         list($width, $height) = getimagesize($this->getPathname());
@@ -136,6 +142,7 @@ class FileInfo extends \SplFileInfo implements FileInfoInterface
 
     /**
      * Is this file uploaded with a POST request?
+     *
      * @return bool
      */
     public function isUploadedFile()
